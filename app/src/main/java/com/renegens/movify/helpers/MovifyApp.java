@@ -16,6 +16,7 @@ public class MovifyApp extends Application {
         //needs to run once to generate it
         component = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
+                .apiModule(new ApiModule())
                 .build();
 
         //Config Realm for the application

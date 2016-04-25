@@ -38,6 +38,11 @@ public class ApplicationModule {
         return Realm.getDefaultInstance();
     }
 
+  /*  @Provides
+    public ForecastService provideForecastService(RestAdapter restAdapter) {
+        return new ForecastServiceImpl(restAdapter);
+    }*/
+
 
 }
 

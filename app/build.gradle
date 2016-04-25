@@ -21,8 +21,26 @@ android {
     }
 }
 
+ext {
+    supportLibraryVersion = '23.3.0'
+    retrofitVersion = '2.0.2'
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Support Libraries
+    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    compile "com.android.support:design:$supportLibraryVersion"
+
+    // Injections
+    apt 'com.google.dagger:dagger-compiler:2.1'
+    provided 'javax.annotation:jsr250-api:1.0'
+    compile 'com.google.dagger:dagger:2.1'
+    compile 'com.jakewharton:butterknife:7.0.1'
+
+    // Testing
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:1.10.19"
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
@@ -30,18 +48,12 @@ dependencies {
     androidTestCompile 'com.android.support:support-annotations:23.3.0'
     androidTestCompile 'com.android.support.test:rules:0.5'
 
-    apt 'com.google.dagger:dagger-compiler:2.1'
-    provided 'javax.annotation:jsr250-api:1.0'
+    // Rest Interactions
+    compile ("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
 
-    compile 'com.google.dagger:dagger:2.1'
-
-
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
-    compile 'com.android.support:support-v4:23.3.0'
-    compile 'com.android.support:recyclerview-v7:23.3.0'
-    compile 'com.jakewharton:butterknife:7.0.1'
-
-    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    // JSON Parsing
+    compile 'com.google.code.gson:gson:2.6.1'
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
 }
