@@ -1,5 +1,6 @@
 package com.renegens.movify.helpers;
 
+import com.renegens.movify.view.ListFragment;
 import com.renegens.movify.view.MainActivityFragment;
 
 import javax.inject.Singleton;
@@ -13,6 +14,8 @@ public interface ApplicationComponent {
     void inject(MovifyApp target);
 
     void inject(MainActivityFragment target);
+
+    void inject(ListFragment target);
 
 }
 

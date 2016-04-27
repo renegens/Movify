@@ -1,6 +1,5 @@
 package com.renegens.movify.adapters;
 
-import android.content.res.TypedArray;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,18 +9,17 @@ import android.widget.TextView;
 
 import com.renegens.movify.R;
 
-import java.util.ArrayList;
+import org.themoviedb.models.toprated.Result;
+
+import io.realm.RealmResults;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHolder> {
 
     private static final String TAG = "CardAdapter";
-    private ArrayList<String> arrayList;
-    private TypedArray typedArray;
+    private RealmResults<Result> list;
 
-    public ListAdapter(ArrayList<String> arrayList, TypedArray typedArray) {
-        super();
-        this.arrayList = arrayList;
-        this.typedArray = typedArray;
+    public ListAdapter(RealmResults<Result> list) {
+        this.list = list;
     }
 
     @Override public ListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -32,13 +30,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
 
     @Override public void onBindViewHolder(ListItemViewHolder holder, int position) {
 
-        holder.itemName.setText(arrayList.get(position));
-        holder.imageView.setImageDrawable(typedArray.getDrawable(position));
+        holder.itemName.setText(list.get(position).originalTitle);
+
     }
 
     @Override public int getItemCount() {
 
-        return arrayList.size();
+        return list.size();
     }
 
     public static class ListItemViewHolder extends RecyclerView.ViewHolder {

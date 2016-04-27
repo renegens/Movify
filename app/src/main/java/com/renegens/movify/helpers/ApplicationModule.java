@@ -3,6 +3,9 @@ package com.renegens.movify.helpers;
 import android.app.Application;
 import android.content.Context;
 
+import com.renegens.movify.http.MovieApiService;
+import com.renegens.movify.presenter.ListFragmentPresenter;
+import com.renegens.movify.presenter.ListFragmentPresenterImpl;
 import com.renegens.movify.repository.DatabaseRepository;
 import com.renegens.movify.repository.DatabaseRepositoryImpl;
 
@@ -29,8 +32,8 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    public DatabaseRepository provideDatabaseRepository(Realm realm) {
-        return new DatabaseRepositoryImpl(realm);
+    public DatabaseRepository provideDatabaseRepository(Realm realm, MovieApiService movieApiService) {
+        return new DatabaseRepositoryImpl(realm, movieApiService);
     }
 
     @Provides
@@ -38,10 +41,11 @@ public class ApplicationModule {
         return Realm.getDefaultInstance();
     }
 
-  /*  @Provides
-    public ForecastService provideForecastService(RestAdapter restAdapter) {
-        return new ForecastServiceImpl(restAdapter);
-    }*/
+    @Provides
+    public ListFragmentPresenter provideListFragmentPresenter(DatabaseRepository databaseRepository){
+        return new ListFragmentPresenterImpl(databaseRepository);
+    }
+
 
 
 }

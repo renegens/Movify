@@ -28,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        MainActivityFragment mainActivityFragment = new MainActivityFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container,mainActivityFragment)
+                .commit();
+
     }
 
     @Override
