@@ -9,16 +9,16 @@ import android.widget.TextView;
 
 import com.renegens.movify.R;
 
-import org.themoviedb.models.toprated.Result;
+import java.util.List;
 
-import io.realm.RealmResults;
+import org.themoviedb.models.toprated.Result;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHolder> {
 
     private static final String TAG = "CardAdapter";
-    private RealmResults<Result> list;
+    private List<Result> list;
 
-    public ListAdapter(RealmResults<Result> list) {
+    public ListAdapter(List<Result> list) {
         this.list = list;
     }
 

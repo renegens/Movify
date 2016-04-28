@@ -1,10 +1,10 @@
 package com.renegens.movify.repository;
 
-import org.themoviedb.models.toprated.Result;
+import org.themoviedb.models.toprated.TopRated;
 
-import io.realm.RealmResults;
+import rx.Observable;
 
 public interface DatabaseRepository {
 
-    RealmResults<Result> getTopRatedMovies();
+    Observable <TopRated> getTopRatedMovies(int pageNumber);
 }

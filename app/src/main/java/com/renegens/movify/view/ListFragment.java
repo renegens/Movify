@@ -7,29 +7,34 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.renegens.movify.R;
 import com.renegens.movify.adapters.ListAdapter;
 import com.renegens.movify.adapters.RecyclerItemClickListener;
 import com.renegens.movify.helpers.DividerItemDecoration;
 import com.renegens.movify.helpers.MovifyApp;
+import com.renegens.movify.http.MovieApiService;
 import com.renegens.movify.presenter.ListFragmentPresenter;
 import com.renegens.movify.presenter.ListFragmentView;
 import com.renegens.movify.repository.DatabaseRepository;
 
 import javax.inject.Inject;
+import java.util.List;
 
 import org.themoviedb.models.toprated.Result;
+import org.themoviedb.models.toprated.TopRated;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmResults;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class ListFragment extends Fragment implements RecyclerItemClickListener.OnItemClickListener, ListFragmentView {
 
@@ -48,12 +53,14 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
     ListFragmentPresenter presenter;
     @Inject
     Realm realm;
+    @Inject
+    MovieApiService movieApiService;
 
     // Not yet used, delete at end
     private String mParam1;
     private String mParam2;
     private ListAdapter listAdapter;
-    private RealmResults<Result> resultList;
+    private List <Result> resultList;
 
     public ListFragment() {
     }
@@ -77,15 +84,18 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
 
         ((MovifyApp) getActivity().getApplication()).getComponent().inject(this);
         // TODO: 27/04/16 fix me
-        resultList = databaseRepository.getTopRatedMovies();
-        resultList.addChangeListener(new RealmChangeListener() {
+
+        //subscription.unsubscribe();
+
+
+        /*resultList.addChangeListener(new RealmChangeListener() {
             @Override
             public void onChange() {
                 Toast.makeText(getActivity(), "something changed", Toast.LENGTH_SHORT).show();
                 listAdapter.notifyDataSetChanged();
 
             }
-        });
+        });*/
 
     }
 
@@ -94,15 +104,80 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.bind(this, view);
+        Observable<TopRated> topRatedMovies = databaseRepository.getTopRatedMovies(1);
+        Observable<TopRated> topRatedMovies2 = databaseRepository.getTopRatedMovies(2);
+        Observable<TopRated> topRatedMovies3 = databaseRepository.getTopRatedMovies(3);
 
-        listAdapter = new ListAdapter(resultList);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
-        recyclerView.setAdapter(listAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        Observable<TopRated> merge = topRatedMovies.mergeWith(topRatedMovies2);
 
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(context, recyclerView, this));
+                merge
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<TopRated>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(TopRated topRated) {
+                        resultList = topRated.getResults();
+
+                        listAdapter = new ListAdapter(resultList);
+                        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
+                        recyclerView.setAdapter(listAdapter);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    }
+                });
+
+        Observer <Result> observer = new Observer<Result>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Result result) {
+                Log.i(TAG, "onNext: "+ result.title);
+            }
+        };
+
+        /*Subscription subscription = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);*/
+
+
+        /*Subscription subscription = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<TopRated>() {
+            @Override
+            public void call(TopRated topRated) {
+                resultList = topRated.getResults();
+
+                listAdapter = new ListAdapter(resultList);
+                recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
+                recyclerView.setAdapter(listAdapter);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                //recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(context, recyclerView, this));
+
+                //System.out.print(list.get(0).title);
+            }
+        });*/
+
+
 
         return view;
     }
@@ -121,7 +196,7 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
     @Override
     public void onResume() {
         super.onResume();
-        recyclerView.setAdapter(listAdapter);
+        //recyclerView.setAdapter(listAdapter);
         presenter.setView(this);
     }
 
