@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import com.renegens.movify.presenter.ListFragmentView;
 import com.renegens.movify.repository.DatabaseRepository;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.themoviedb.models.toprated.Result;
@@ -34,6 +34,7 @@ import io.realm.Realm;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class ListFragment extends Fragment implements RecyclerItemClickListener.OnItemClickListener, ListFragmentView {
@@ -60,7 +61,7 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
     private String mParam1;
     private String mParam2;
     private ListAdapter listAdapter;
-    private List <Result> resultList;
+    private List<Result> resultList = new ArrayList<>();
 
     public ListFragment() {
     }
@@ -104,40 +105,32 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.bind(this, view);
+
+        listAdapter = new ListAdapter(resultList);
+        recyclerView.setAdapter(listAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
+
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        //DO ALL THIS SOMEWHERE ELSE
         Observable<TopRated> topRatedMovies = databaseRepository.getTopRatedMovies(1);
         Observable<TopRated> topRatedMovies2 = databaseRepository.getTopRatedMovies(2);
         Observable<TopRated> topRatedMovies3 = databaseRepository.getTopRatedMovies(3);
 
-        Observable<TopRated> merge = topRatedMovies.mergeWith(topRatedMovies2);
+        Observable<TopRated> merged = topRatedMovies.concatWith(topRatedMovies2).concatWith(topRatedMovies3);
 
-                merge
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<TopRated>() {
-                    @Override
-                    public void onCompleted() {
+        Observable <Result> resultObservable = merged.flatMap(new Func1<TopRated, Observable<Result>>() {
+            @Override
+            public Observable<Result> call(TopRated topRated) {
+                return Observable.from(topRated.results);
+            }
+        });
 
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
 
-                    }
-
-                    @Override
-                    public void onNext(TopRated topRated) {
-                        resultList = topRated.getResults();
-
-                        listAdapter = new ListAdapter(resultList);
-                        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
-                        recyclerView.setAdapter(listAdapter);
-                        recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    }
-                });
-
-        Observer <Result> observer = new Observer<Result>() {
+        Observer<Result> observerResults = new Observer<Result>() {
             @Override
             public void onCompleted() {
 
@@ -150,34 +143,14 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
 
             @Override
             public void onNext(Result result) {
-                Log.i(TAG, "onNext: "+ result.title);
+                System.out.println(result.title);
+                resultList.add(result);
+                listAdapter.notifyDataSetChanged();
             }
         };
 
-        /*Subscription subscription = observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);*/
-
-
-        /*Subscription subscription = observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<TopRated>() {
-            @Override
-            public void call(TopRated topRated) {
-                resultList = topRated.getResults();
-
-                listAdapter = new ListAdapter(resultList);
-                recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
-                recyclerView.setAdapter(listAdapter);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-                //recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(context, recyclerView, this));
-
-                //System.out.print(list.get(0).title);
-            }
-        });*/
-
-
+        //DO ALL THIS ON AN ACTIVITY
+        resultObservable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observerResults);
 
         return view;
     }
@@ -203,8 +176,6 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
     @Override
     public void onItemClick(View view, int position) {
 
-
-
     }
 
     @Override
@@ -216,4 +187,5 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
     public void showToast(String msg) {
 
     }
+
 }

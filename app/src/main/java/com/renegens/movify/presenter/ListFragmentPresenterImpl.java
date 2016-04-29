@@ -11,6 +11,8 @@ public class ListFragmentPresenterImpl implements ListFragmentPresenter {
         this.databaseRepository = databaseRepository;
     }
 
+
+
     @Override
     public void onClick(int position) {
 
