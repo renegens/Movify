@@ -15,10 +15,9 @@ import com.renegens.movify.R;
 import com.renegens.movify.adapters.ListAdapter;
 import com.renegens.movify.adapters.RecyclerItemClickListener;
 import com.renegens.movify.helpers.DividerItemDecoration;
-import com.renegens.movify.helpers.MovifyApp;
+import com.renegens.movify.MovifyApp;
 import com.renegens.movify.http.MovieApiService;
-import com.renegens.movify.presenter.ListFragmentPresenter;
-import com.renegens.movify.presenter.ListFragmentView;
+import com.renegens.movify.presenter.ListFragmentMVP;
 import com.renegens.movify.repository.DatabaseRepository;
 
 import javax.inject.Inject;
@@ -37,7 +36,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-public class ListFragment extends Fragment implements RecyclerItemClickListener.OnItemClickListener, ListFragmentView {
+public class ListFragment extends Fragment implements RecyclerItemClickListener.OnItemClickListener, ListFragmentMVP.View {
 
     // Not yet used, delete at end
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,7 +50,7 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
     @Inject
     Context context;
     @Inject
-    ListFragmentPresenter presenter;
+    ListFragmentMVP.Presenter presenter;
     @Inject
     Realm realm;
     @Inject
@@ -171,6 +170,7 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
         super.onResume();
         //recyclerView.setAdapter(listAdapter);
         presenter.setView(this);
+
     }
 
     @Override

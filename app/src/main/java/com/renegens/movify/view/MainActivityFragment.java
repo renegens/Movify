@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.renegens.movify.R;
-import com.renegens.movify.helpers.MovifyApp;
+import com.renegens.movify.MovifyApp;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

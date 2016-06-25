@@ -1,11 +1,11 @@
-package com.renegens.movify.helpers;
+package com.renegens.movify.injection;
 
 import android.app.Application;
 import android.content.Context;
 
 import com.renegens.movify.http.MovieApiService;
+import com.renegens.movify.presenter.ListFragmentMVP;
 import com.renegens.movify.presenter.ListFragmentPresenter;
-import com.renegens.movify.presenter.ListFragmentPresenterImpl;
 import com.renegens.movify.repository.DatabaseRepository;
 import com.renegens.movify.repository.DatabaseRepositoryImpl;
 
@@ -42,8 +42,8 @@ public class ApplicationModule {
     }
 
     @Provides
-    public ListFragmentPresenter provideListFragmentPresenter(DatabaseRepository databaseRepository){
-        return new ListFragmentPresenterImpl(databaseRepository);
+    public ListFragmentMVP.Presenter provideListFragmentPresenter(DatabaseRepository databaseRepository){
+        return new ListFragmentPresenter(databaseRepository);
     }
 
 

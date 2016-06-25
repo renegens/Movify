@@ -1,6 +1,11 @@
-package com.renegens.movify.helpers;
+package com.renegens.movify;
 
 import android.app.Application;
+
+import com.renegens.movify.injection.ApiModule;
+import com.renegens.movify.injection.ApplicationComponent;
+import com.renegens.movify.injection.ApplicationModule;
+import com.renegens.movify.injection.DaggerApplicationComponent;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -14,6 +19,7 @@ public class MovifyApp extends Application {
         super.onCreate();
 
         //needs to run once to generate it
+
         component = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .apiModule(new ApiModule())

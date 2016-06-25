@@ -1,11 +1,33 @@
 package com.renegens.movify.presenter;
 
-public interface ListFragmentPresenter {
+import com.renegens.movify.repository.DatabaseRepository;
 
-    void onClick(int position);
+public class ListFragmentPresenter implements ListFragmentMVP.Presenter {
 
-    void onLongClick(int position);
+    private DatabaseRepository databaseRepository;
+    private ListFragmentMVP.View view;
 
-    void setView(ListFragmentView view);
+    public ListFragmentPresenter(DatabaseRepository databaseRepository) {
+        this.databaseRepository = databaseRepository;
+    }
+
+
+
+    @Override
+    public void onClick(int position) {
+
+
+    }
+
+    @Override
+    public void onLongClick(int position) {
+
+
+    }
+
+    @Override
+    public void setView(ListFragmentMVP.View view) {
+        this.view = view;
+    }
 
 }
