@@ -1,4 +1,4 @@
-package com.renegens.movify.presenter;
+package com.renegens.movify.ui.presenter;
 
 public interface ListFragmentMVP {
 
@@ -9,6 +9,7 @@ public interface ListFragmentMVP {
         void onLongClick(int position);
 
         void setView(ListFragmentMVP.View view);
+
     }
 
     interface View {

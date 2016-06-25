@@ -1,6 +1,6 @@
 package com.renegens.movify.injection;
 
-import com.renegens.movify.helpers.Constants;
+import com.renegens.movify.http.Constants;
 import com.renegens.movify.http.MovieApiService;
 
 import java.io.IOException;

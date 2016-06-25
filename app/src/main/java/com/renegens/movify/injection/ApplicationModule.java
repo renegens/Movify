@@ -4,8 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.renegens.movify.http.MovieApiService;
-import com.renegens.movify.presenter.ListFragmentMVP;
-import com.renegens.movify.presenter.ListFragmentPresenter;
+import com.renegens.movify.ui.presenter.ListFragmentMVP;
+import com.renegens.movify.ui.presenter.ListFragmentPresenter;
 import com.renegens.movify.repository.DatabaseRepository;
 import com.renegens.movify.repository.DatabaseRepositoryImpl;
 

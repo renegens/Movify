@@ -1,4 +1,4 @@
-package com.renegens.movify.view;
+package com.renegens.movify.ui.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,14 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.renegens.movify.MovifyApp;
 import com.renegens.movify.R;
+import com.renegens.movify.adapters.DividerItemDecoration;
 import com.renegens.movify.adapters.ListAdapter;
 import com.renegens.movify.adapters.RecyclerItemClickListener;
-import com.renegens.movify.helpers.DividerItemDecoration;
-import com.renegens.movify.MovifyApp;
 import com.renegens.movify.http.MovieApiService;
-import com.renegens.movify.presenter.ListFragmentMVP;
 import com.renegens.movify.repository.DatabaseRepository;
+import com.renegens.movify.ui.presenter.ListFragmentMVP;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -56,31 +56,16 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
     @Inject
     MovieApiService movieApiService;
 
-    // Not yet used, delete at end
-    private String mParam1;
-    private String mParam2;
     private ListAdapter listAdapter;
     private List<Result> resultList = new ArrayList<>();
 
     public ListFragment() {
     }
 
-    public static ListFragment newInstance(String param1, String param2) {
-        ListFragment fragment = new ListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
         ((MovifyApp) getActivity().getApplication()).getComponent().inject(this);
         // TODO: 27/04/16 fix me
@@ -120,14 +105,12 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
 
         Observable<TopRated> merged = topRatedMovies.concatWith(topRatedMovies2).concatWith(topRatedMovies3);
 
-        Observable <Result> resultObservable = merged.flatMap(new Func1<TopRated, Observable<Result>>() {
+        Observable<Result> resultObservable = merged.flatMap(new Func1<TopRated, Observable<Result>>() {
             @Override
             public Observable<Result> call(TopRated topRated) {
                 return Observable.from(topRated.results);
             }
         });
-
-
 
         Observer<Result> observerResults = new Observer<Result>() {
             @Override

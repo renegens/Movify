@@ -1,4 +1,4 @@
-package com.renegens.movify.presenter;
+package com.renegens.movify.ui.presenter;
 
 import com.renegens.movify.repository.DatabaseRepository;
 

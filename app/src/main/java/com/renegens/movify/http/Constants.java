@@ -1,4 +1,4 @@
-package com.renegens.movify.helpers;
+package com.renegens.movify.http;
 
 public class Constants {
 

@@ -5,6 +5,8 @@ import org.themoviedb.models.toprated.TopRated;
 import rx.Observer;
 
 public class GetTopRatedObserver implements Observer <TopRated> {
+
+
     @Override
     public void onCompleted() {
 
