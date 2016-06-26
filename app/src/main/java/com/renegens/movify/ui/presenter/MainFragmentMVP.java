@@ -12,8 +12,6 @@ public interface MainFragmentMVP {
 
     interface View {
 
-        void showToast(String msg);
-
         void showListFragment();
     }
 

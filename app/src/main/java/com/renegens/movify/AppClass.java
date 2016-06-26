@@ -10,15 +10,13 @@ import com.renegens.movify.injection.DaggerApplicationComponent;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class MovifyApp extends Application {
+public class AppClass extends Application {
 
     private ApplicationComponent component;
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-        //needs to run once to generate it
 
         component = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
@@ -31,11 +29,11 @@ public class MovifyApp extends Application {
                 .build();
         //Realm.deleteRealm(realmConfiguration); //Deletes the realm
         Realm.setDefaultConfiguration(realmConfiguration);
+
     }
 
     public ApplicationComponent getComponent() {
         return component;
     }
-
 }
 

@@ -6,8 +6,8 @@ import android.content.Context;
 import com.renegens.movify.http.MovieApiService;
 import com.renegens.movify.ui.presenter.ListFragmentMVP;
 import com.renegens.movify.ui.presenter.ListFragmentPresenter;
-import com.renegens.movify.repository.DatabaseRepository;
-import com.renegens.movify.repository.DatabaseRepositoryImpl;
+import com.renegens.movify.ui.presenter.MainFragmentMVP;
+import com.renegens.movify.ui.presenter.MainFragmentPresenter;
 
 import javax.inject.Singleton;
 
@@ -30,11 +30,6 @@ public class ApplicationModule {
         return application;
     }
 
-    @Singleton
-    @Provides
-    public DatabaseRepository provideDatabaseRepository(Realm realm, MovieApiService movieApiService) {
-        return new DatabaseRepositoryImpl(realm, movieApiService);
-    }
 
     @Provides
     public Realm providesRealm() {
@@ -42,8 +37,13 @@ public class ApplicationModule {
     }
 
     @Provides
-    public ListFragmentMVP.Presenter provideListFragmentPresenter(DatabaseRepository databaseRepository){
-        return new ListFragmentPresenter(databaseRepository);
+    public ListFragmentMVP.Presenter provideListFragmentPresenter(MovieApiService movieApiService){
+        return new ListFragmentPresenter(movieApiService);
+    }
+
+    @Provides
+    public MainFragmentMVP.Presenter provideMainFragmentPresenter(){
+        return new MainFragmentPresenter();
     }
 
 

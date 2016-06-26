@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.renegens.movify.MovifyApp;
+import com.renegens.movify.AppClass;
 import com.renegens.movify.R;
 import com.renegens.movify.ui.presenter.MainFragmentMVP;
 
@@ -35,7 +35,7 @@ public class MainFragment extends Fragment implements MainFragmentMVP.View {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((MovifyApp) (getActivity().getApplication())).getComponent().inject(this);
+        ((AppClass) (getActivity().getApplication())).getComponent().inject(this);
 
     }
 
@@ -63,11 +63,6 @@ public class MainFragment extends Fragment implements MainFragmentMVP.View {
     public void topRatedMovies() {
 
         presenter.topRatedMoviesClicked();
-    }
-
-    @Override
-    public void showToast(String msg) {
-
     }
 
     @Override
