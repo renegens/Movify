@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.renegens.movify.AppClass;
+import com.renegens.movify.root.AppClass;
 import com.renegens.movify.R;
 import com.renegens.movify.topmovies.ListFragment;
 

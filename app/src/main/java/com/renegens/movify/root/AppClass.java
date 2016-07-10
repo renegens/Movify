@@ -1,11 +1,8 @@
-package com.renegens.movify;
+package com.renegens.movify.root;
 
 import android.app.Application;
 
 import com.renegens.movify.http.ApiModule;
-import com.renegens.movify.injection.ApplicationComponent;
-import com.renegens.movify.injection.ApplicationModule;
-import com.renegens.movify.injection.DaggerApplicationComponent;
 import com.renegens.movify.topmovies.TopMoviesModule;
 
 import io.realm.Realm;

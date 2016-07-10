@@ -1,4 +1,4 @@
-package com.renegens.movify;
+package com.renegens.movify.root;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.renegens.movify.R;
 import com.renegens.movify.home.MainFragment;
 
 public class MainActivity extends AppCompatActivity {

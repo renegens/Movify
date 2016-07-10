@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.renegens.movify.AppClass;
+import com.renegens.movify.root.AppClass;
 import com.renegens.movify.R;
 
 import javax.inject.Inject;

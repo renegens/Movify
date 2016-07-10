@@ -1,4 +1,4 @@
-package com.renegens.movify.injection;
+package com.renegens.movify.root;
 
 import android.app.Application;
 import android.content.Context;
