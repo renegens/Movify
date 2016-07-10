@@ -1,4 +1,4 @@
-package com.renegens.movify.repository;
+package com.renegens.movify.topmovies;
 
 import org.themoviedb.models.toprated.TopRated;
 

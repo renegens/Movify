@@ -1,4 +1,4 @@
-package com.renegens.movify.ui.view;
+package com.renegens.movify.home;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +10,7 @@ import android.widget.Button;
 
 import com.renegens.movify.AppClass;
 import com.renegens.movify.R;
-import com.renegens.movify.ui.presenter.MainFragmentMVP;
+import com.renegens.movify.topmovies.ListFragment;
 
 import javax.inject.Inject;
 

@@ -1,4 +1,4 @@
-package com.renegens.movify.ui.view;
+package com.renegens.movify.topmovies;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -12,10 +12,6 @@ import android.view.ViewGroup;
 
 import com.renegens.movify.AppClass;
 import com.renegens.movify.R;
-import com.renegens.movify.adapters.DividerItemDecoration;
-import com.renegens.movify.adapters.ListAdapter;
-import com.renegens.movify.adapters.RecyclerItemClickListener;
-import com.renegens.movify.ui.presenter.ListFragmentMVP;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.renegens.movify.ui.presenter;
+package com.renegens.movify.home;
 
 public class MainFragmentPresenter implements MainFragmentMVP.Presenter {
 

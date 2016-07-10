@@ -1,4 +1,4 @@
-package com.renegens.movify.adapters;
+package com.renegens.movify.topmovies;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

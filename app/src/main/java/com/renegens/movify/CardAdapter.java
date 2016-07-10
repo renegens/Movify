@@ -1,4 +1,4 @@
-package com.renegens.movify.adapters;
+package com.renegens.movify;
 
 import android.content.res.TypedArray;
 import android.support.v7.widget.RecyclerView;
@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.renegens.movify.R;
 
 import java.util.ArrayList;
 

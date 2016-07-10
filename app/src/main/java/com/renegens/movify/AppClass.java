@@ -2,10 +2,11 @@ package com.renegens.movify;
 
 import android.app.Application;
 
-import com.renegens.movify.injection.ApiModule;
+import com.renegens.movify.http.ApiModule;
 import com.renegens.movify.injection.ApplicationComponent;
 import com.renegens.movify.injection.ApplicationModule;
 import com.renegens.movify.injection.DaggerApplicationComponent;
+import com.renegens.movify.topmovies.TopMoviesModule;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -20,6 +21,7 @@ public class AppClass extends Application {
 
         component = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
+                .topMoviesModule(new TopMoviesModule())
                 .apiModule(new ApiModule())
                 .build();
 
