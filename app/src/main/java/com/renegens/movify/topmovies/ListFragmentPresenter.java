@@ -2,26 +2,22 @@ package com.renegens.movify.topmovies;
 
 import android.support.annotation.Nullable;
 
-import com.renegens.movify.http.MovieApiService;
-import com.renegens.movify.http.NetworkRequest;
-
 import org.themoviedb.models.toprated.Result;
-import org.themoviedb.models.toprated.TopRated;
 
-import rx.Observable;
+import rx.Observer;
 import rx.Subscription;
-import rx.functions.Action1;
-import rx.functions.Func1;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class ListFragmentPresenter implements ListFragmentMVP.Presenter {
 
     @Nullable
     private ListFragmentMVP.View view;
-    private MovieApiService movieApiService;
-    private Subscription subscription;
+    private ListFragmentMVP.Model model;
+    private Subscription subscription = null;
 
-    public ListFragmentPresenter(MovieApiService movieApiService) {
-        this.movieApiService = movieApiService;
+    public ListFragmentPresenter(ListFragmentMVP.Model model) {
+        this.model = model;
     }
 
     @Override
@@ -51,35 +47,27 @@ public class ListFragmentPresenter implements ListFragmentMVP.Presenter {
     @Override
     public void loadData() {
 
-        Observable<TopRated> topRatedMovies = movieApiService.getTopRatedMovies(1);
-        Observable<TopRated> topRatedMovies2 = movieApiService.getTopRatedMovies(2);
-        Observable<TopRated> topRatedMovies3 = movieApiService.getTopRatedMovies(3);
-
-        Observable<TopRated> merged = topRatedMovies.concatWith(topRatedMovies2).concatWith(topRatedMovies3);
-
-        Observable<Result> resultObservable = merged.flatMap(new Func1<TopRated, Observable<Result>>() {
+        subscription = model.results().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Result>() {
             @Override
-            public Observable<Result> call(TopRated topRated) {
-                return Observable.from(topRated.results);
+            public void onCompleted() {
+
             }
-        });
 
-        subscription = NetworkRequest.performAsyncRequest(resultObservable, new Action1<Result>() {
             @Override
-            public void call(Result result) {
+            public void onError(Throwable e) {
+                if (view != null) {
+                    view.showSnackbar("Error getting movies");
+                }
+            }
+
+            @Override
+            public void onNext(Result result) {
                 if (view != null) {
                     view.updateData(result);
                 }
-
-            }
-        }, new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-                if (view != null) {
-                    view.showSnackbar("Error getting user info");
-                }
             }
         });
+
 
     }
 

@@ -1,22 +1,31 @@
 package com.renegens.movify.topmovies;
 
+import com.renegens.movify.http.ApiModule;
 import com.renegens.movify.http.MovieApiService;
-import com.renegens.movify.home.MainFragmentMVP;
-import com.renegens.movify.home.MainFragmentPresenter;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 
-@Module
+@Module(includes={ApiModule.class})
 public class TopMoviesModule {
 
     @Provides
-    public ListFragmentMVP.Presenter provideListFragmentPresenter(MovieApiService movieApiService) {
-        return new ListFragmentPresenter(movieApiService);
+    public ListFragmentMVP.Presenter provideListFragmentPresenter(ListFragmentMVP.Model listFragmentModel) {
+        return new ListFragmentPresenter(listFragmentModel);
     }
 
+
     @Provides
-    public MainFragmentMVP.Presenter provideMainFragmentPresenter() {
-        return new MainFragmentPresenter();
+    public ListFragmentMVP.Model provideListFragmentModel(ListRepository repository){
+        return new ListFragmentModel(repository);
     }
+    @Singleton
+    @Provides
+    public ListRepository provideRepo(MovieApiService movieApiService){
+        return new Repository(movieApiService);
+    }
+
+
 }

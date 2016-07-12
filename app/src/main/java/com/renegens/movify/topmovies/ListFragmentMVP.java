@@ -2,6 +2,8 @@ package com.renegens.movify.topmovies;
 
 import org.themoviedb.models.toprated.Result;
 
+import rx.Observable;
+
 public interface ListFragmentMVP {
 
     interface Presenter {
@@ -25,6 +27,8 @@ public interface ListFragmentMVP {
     }
 
     interface Model {
+
+        Observable<Result> results();
 
     }
 

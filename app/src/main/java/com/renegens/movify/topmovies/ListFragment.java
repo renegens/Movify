@@ -63,6 +63,7 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+
         return view;
     }
 

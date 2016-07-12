@@ -2,6 +2,7 @@ package com.renegens.movify.root;
 
 import android.app.Application;
 
+import com.renegens.movify.home.HomeModule;
 import com.renegens.movify.http.ApiModule;
 import com.renegens.movify.topmovies.TopMoviesModule;
 
@@ -18,6 +19,7 @@ public class AppClass extends Application {
 
         component = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
+                .homeModule(new HomeModule())
                 .topMoviesModule(new TopMoviesModule())
                 .apiModule(new ApiModule())
                 .build();
