@@ -47,6 +47,7 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
         super.onCreate(savedInstanceState);
 
         ((AppClass) getActivity().getApplication()).getComponent().inject(this);
+        setRetainInstance(true);
     }
 
     @Override
@@ -68,10 +69,13 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
     }
 
     @Override
-    public void updateData(Result result) {
-        System.out.println(result.title);
-        resultList.add(result);
-        listAdapter.notifyDataSetChanged();
+    public void updateData(List<Result> result) {
+        for (Result result1: result){
+            System.out.println(result1.title);
+        }
+        listAdapter.notifyItemInserted(result.size());
+        listAdapter.notifyDataSetChanged
+                ();
     }
 
     @Override

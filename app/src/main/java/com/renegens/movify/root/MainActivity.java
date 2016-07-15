@@ -12,12 +12,15 @@ import com.renegens.movify.home.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ((AppClass)getApplication()).getComponent().inject(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -29,10 +32,13 @@ public class MainActivity extends AppCompatActivity {
         });
         MainFragment mainFragment = new MainFragment();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, mainFragment)
+                .replace(R.id.fragment_container, mainFragment)
                 .commit();
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

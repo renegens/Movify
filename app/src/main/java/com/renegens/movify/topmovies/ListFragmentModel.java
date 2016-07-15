@@ -1,10 +1,10 @@
 package com.renegens.movify.topmovies;
 
+import java.util.List;
+
 import org.themoviedb.models.toprated.Result;
-import org.themoviedb.models.toprated.TopRated;
 
 import rx.Observable;
-import rx.functions.Func1;
 
 public class ListFragmentModel implements ListFragmentMVP.Model {
 
@@ -15,14 +15,10 @@ public class ListFragmentModel implements ListFragmentMVP.Model {
     }
 
     @Override
-    public Observable<Result> results() {
+    public Observable<List<Result>> results() {
 
-        return repository.getData().flatMap(new Func1<TopRated, Observable<Result>>() {
-            @Override
-            public Observable<Result> call(TopRated topRated) {
-                return Observable.from(topRated.results);
-            }
-        });
+        return repository.getListFromNetwork();
+
     }
-
 }
+

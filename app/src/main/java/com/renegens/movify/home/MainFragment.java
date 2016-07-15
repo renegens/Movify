@@ -70,6 +70,7 @@ public class MainFragment extends Fragment implements MainFragmentMVP.View {
         ListFragment listFragment = new ListFragment();
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, listFragment)
+                .addToBackStack("listFragment")
                 .commit();
     }
 }

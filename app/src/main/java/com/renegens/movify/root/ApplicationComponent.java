@@ -20,6 +20,8 @@ public interface ApplicationComponent {
 
     void inject(ListFragment target);
 
+    void inject(MainActivity target);
+
 
 
 

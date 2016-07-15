@@ -1,15 +1,19 @@
 package com.renegens.movify.topmovies;
 
-import org.themoviedb.models.toprated.TopRated;
+import java.util.List;
+
+import org.themoviedb.models.toprated.Result;
 
 import rx.Observable;
 
 public interface ListRepository {
 
-    Observable<TopRated> getFromMemory();
+    Observable<Result> getFromDB();
 
-    Observable<TopRated> getFromNetwork();
+    Observable<Result> getFromNetwork();
 
-    Observable<TopRated> getData();
+    Observable<List<Result>> getListFromNetwork();
+
+    Observable<Result> getData();
 
 }

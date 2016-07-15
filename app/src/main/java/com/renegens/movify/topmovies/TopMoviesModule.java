@@ -21,6 +21,7 @@ public class TopMoviesModule {
     public ListFragmentMVP.Model provideListFragmentModel(ListRepository repository){
         return new ListFragmentModel(repository);
     }
+
     @Singleton
     @Provides
     public ListRepository provideRepo(MovieApiService movieApiService){

@@ -2,6 +2,8 @@ package com.renegens.movify.topmovies;
 
 import android.support.annotation.Nullable;
 
+import java.util.List;
+
 import org.themoviedb.models.toprated.Result;
 
 import rx.Observer;
@@ -47,28 +49,27 @@ public class ListFragmentPresenter implements ListFragmentMVP.Presenter {
     @Override
     public void loadData() {
 
-        subscription = model.results().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Result>() {
-            @Override
-            public void onCompleted() {
+        subscription = model.results().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<Result>>() {
+                    @Override
+                    public void onCompleted() {
 
-            }
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                if (view != null) {
-                    view.showSnackbar("Error getting movies");
-                }
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        if (view != null) {
+                            view.showSnackbar("Error getting movies");
+                        }
+                    }
 
-            @Override
-            public void onNext(Result result) {
-                if (view != null) {
-                    view.updateData(result);
-                }
-            }
-        });
-
-
+                    @Override
+                    public void onNext(List<Result> results) {
+                        if (view != null) {
+                            view.updateData(results);
+                        }
+                    }
+                });
     }
 
 }
