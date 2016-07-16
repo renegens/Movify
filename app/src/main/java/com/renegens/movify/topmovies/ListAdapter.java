@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.renegens.movify.R;
@@ -42,12 +41,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListItemViewHo
     public static class ListItemViewHolder extends RecyclerView.ViewHolder {
 
         public TextView itemName;
-        public ImageView imageView;
 
         public ListItemViewHolder(View itemView) {
             super(itemView);
             itemName = (TextView) itemView.findViewById(R.id.textView_fragmentlist_task_name);
-            imageView = (ImageView) itemView.findViewById(R.id.imageView_fragmenlist_recyclerItem);
         }
     }
 }

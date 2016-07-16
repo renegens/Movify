@@ -1,8 +1,6 @@
 package com.renegens.movify.http;
 
-import java.util.List;
-
-import org.themoviedb.models.toprated.Result;
+import org.themoviedb.models.toprated.TopRated;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -16,7 +14,7 @@ public interface MovieApiService {
     Call<ResponseBody> getLatestMovies();
 
     @GET("top_rated")
-    Observable <List<Result>> getTopRatedMovies(@Query("page") Integer page);
+    Observable <TopRated> getTopRatedMovies(@Query("page") Integer page);
 
 
 }

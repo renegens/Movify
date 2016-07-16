@@ -1,7 +1,5 @@
 package com.renegens.movify.topmovies;
 
-import java.util.List;
-
 import org.themoviedb.models.toprated.Result;
 
 import rx.Observable;
@@ -23,14 +21,14 @@ public interface ListFragmentMVP {
 
     interface View {
 
-        void updateData(List<Result> result);
+        void updateData(Result result);
 
         void showSnackbar(String s);
     }
 
     interface Model {
 
-        Observable<List<Result>> results();
+        Observable<Result> result();
 
     }
 

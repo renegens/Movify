@@ -8,18 +8,40 @@
 
     tools:context=".topmovies.ListFragment">
 
+  <android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
+      <TextView
+        android:id="@+id/header"
+        android:text="Hello, here are your top movies."
+        android:textStyle="bold"
+        android:textSize="40sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+      <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="398dp"
+        android:layout_gravity="bottom"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/md_keylines"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/task_list_row"/>
+        tools:listitem="@layout/task_list_row" />
+
+
+    </LinearLayout>
+  </android.support.v4.widget.NestedScrollView>
+
+
 
 </FrameLayout>
 

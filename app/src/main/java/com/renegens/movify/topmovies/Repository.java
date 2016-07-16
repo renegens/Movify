@@ -1,77 +1,83 @@
 package com.renegens.movify.topmovies;
 
-import android.util.Log;
-
 import com.renegens.movify.http.MovieApiService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.themoviedb.models.toprated.Result;
+import org.themoviedb.models.toprated.TopRated;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
+import rx.functions.Action1;
 import rx.functions.Func1;
 
 public class Repository implements ListRepository {
 
     private MovieApiService movieApiService;
     private Realm realm;
+    private List<Result> results;
 
     public Repository(MovieApiService movieApiService) {
         this.movieApiService = movieApiService;
+        realm = Realm.getDefaultInstance();
+        results = new ArrayList<>();
 
     }
 
     @Override
     public Observable<Result> getFromDB() {
 
-        realm = Realm.getDefaultInstance();
         Observable<RealmResults<Result>> results = realm.where(Result.class).findAll().asObservable();
-        realm.close();
 
         return results.flatMap(new Func1<RealmResults<Result>, Observable<Result>>() {
             @Override
             public Observable<Result> call(RealmResults<Result> results) {
-                Log.d("Realm", "Returning results") ;
                 return Observable.from(results);
+            }
+        }).doOnError(new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                throwable.printStackTrace();
             }
         });
     }
 
     @Override
-    public Observable<Result> getFromNetwork() {
-        return null;
-
+    public Observable<Result> getFromMemory() {
+        return Observable.from(results);
     }
 
     @Override
-    public Observable<List<Result>> getListFromNetwork() {
-        /*Observable<List<Result>> topRatedObservable = movieApiService.getTopRatedMovies(1).concatWith(movieApiService.getTopRatedMovies(2)).concatWith(movieApiService.getTopRatedMovies(3));
-        topRatedObservable.doOnNext(new Action1<List<Result>>() {
+    public Observable<Result> getFromNetwork() {
+
+        Observable<TopRated> topRatedObservable = movieApiService.getTopRatedMovies(1).concatWith(movieApiService.getTopRatedMovies(2)).concatWith(movieApiService.getTopRatedMovies(3));
+
+        return topRatedObservable.flatMap(new Func1<TopRated, Observable<Result>>() {
             @Override
-            public void call(List<Result> results) {
-                realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realm.copyToRealmOrUpdate(results);
-                realm.commitTransaction();
+            public Observable<Result> call(TopRated topRated) {
+                return Observable.from(topRated.results);
             }
-        }).onErrorResumeNext(new Func1<Throwable, Observable<? extends List<Result>>>() {
+        }).doOnNext(new Action1<Result>() {
             @Override
-            public Observable<? extends List<Result>> call(Throwable throwable) {
+            public void call(Result result) {
+                results.add(result);
+            }
+        }).onErrorResumeNext(new Func1<Throwable, Observable<? extends Result>>() {
+            @Override
+            public Observable<? extends Result> call(Throwable throwable) {
                 throwable.printStackTrace();
                 return null;
             }
         });
 
-        return topRatedObservable;*/
-
-        return movieApiService.getTopRatedMovies(1);
     }
 
     @Override
-    public Observable <Result> getData() {
-        return getFromDB().switchIfEmpty(getFromNetwork());
+    public Observable<Result> getData() {
+        return getFromMemory().switchIfEmpty(getFromNetwork());
     }
 
 }

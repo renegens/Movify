@@ -63,19 +63,20 @@ public class ListFragment extends Fragment implements RecyclerItemClickListener.
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        recyclerView.setNestedScrollingEnabled(false);
 
         return view;
     }
 
     @Override
-    public void updateData(List<Result> result) {
-        for (Result result1: result){
+    public void updateData(Result result) {
+        /*for (Result result1: result){
             System.out.println(result1.title);
-        }
-        listAdapter.notifyItemInserted(result.size());
-        listAdapter.notifyDataSetChanged
-                ();
+        }*/
+
+        resultList.add(result);
+        listAdapter.notifyItemInserted(resultList.size()-1);
+        //listAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -3,22 +3,12 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/listView_height"
+    android:layout_height="80dp"
     android:orientation="horizontal"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:background="?android:selectableItemBackground">
-
-
-  <ImageView
-      android:id="@+id/imageView_fragmenlist_recyclerItem"
-      android:layout_width="100dp"
-      android:layout_height="100dp"
-      android:scaleType="fitXY"
-      android:layout_gravity="center_vertical"
-      android:layout_margin="@dimen/md_keylines"
-  />
 
   <TextView
       android:id="@+id/textView_fragmentlist_task_name"
@@ -27,8 +17,8 @@
       android:ellipsize="end"
       android:gravity="start"
       android:layout_gravity="center_vertical"
-      android:singleLine="true"
       android:textAppearance="?attr/textAppearanceListItem"
       android:textColor="@color/black_text"
-      android:textSize="16sp"/>
+      android:textSize="25sp"/>
+
 </LinearLayout>

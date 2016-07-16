@@ -1,7 +1,5 @@
 package com.renegens.movify.topmovies;
 
-import java.util.List;
-
 import org.themoviedb.models.toprated.Result;
 
 import rx.Observable;
@@ -15,9 +13,9 @@ public class ListFragmentModel implements ListFragmentMVP.Model {
     }
 
     @Override
-    public Observable<List<Result>> results() {
+    public Observable<Result> result() {
 
-        return repository.getListFromNetwork();
+        return repository.getData();
 
     }
 }
