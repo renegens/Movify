@@ -6,7 +6,7 @@
     android:id="@+id/listFragment_rootView"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    tools:context=".topmovies.ListFragment">
+    tools:context=".ui.topmovies.ListFragment">
 
   <android.support.v4.widget.NestedScrollView
     android:layout_width="match_parent"

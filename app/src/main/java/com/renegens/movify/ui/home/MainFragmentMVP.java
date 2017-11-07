@@ -1,4 +1,4 @@
-package com.renegens.movify.home;
+package com.renegens.movify.ui.home;
 
 public interface MainFragmentMVP {
 

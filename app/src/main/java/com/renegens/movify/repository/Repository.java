@@ -1,4 +1,4 @@
-package com.renegens.movify.topmovies;
+package com.renegens.movify.repository;
 
 import com.renegens.movify.http.MovieApiService;
 
@@ -6,13 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.themoviedb.models.toprated.Result;
-import org.themoviedb.models.toprated.TopRated;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 public class Repository implements ListRepository {
 

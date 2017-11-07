@@ -1,13 +1,15 @@
-package com.renegens.movify.root;
+package com.renegens.movify;
 
 import android.app.Application;
 
-import com.renegens.movify.home.HomeModule;
+import com.renegens.movify.di.ApplicationComponent;
+import com.renegens.movify.di.ApplicationModule;
+import com.renegens.movify.di.DaggerApplicationComponent;
+import com.renegens.movify.ui.home.HomeModule;
 import com.renegens.movify.http.ApiModule;
-import com.renegens.movify.topmovies.TopMoviesModule;
+import com.renegens.movify.ui.topmovies.TopMoviesModule;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 public class AppClass extends Application {
 

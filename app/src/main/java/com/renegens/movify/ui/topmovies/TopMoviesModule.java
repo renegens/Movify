@@ -1,7 +1,9 @@
-package com.renegens.movify.topmovies;
+package com.renegens.movify.ui.topmovies;
 
 import com.renegens.movify.http.ApiModule;
 import com.renegens.movify.http.MovieApiService;
+import com.renegens.movify.repository.ListRepository;
+import com.renegens.movify.repository.Repository;
 
 import javax.inject.Singleton;
 

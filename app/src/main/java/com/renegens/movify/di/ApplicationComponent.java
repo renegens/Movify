@@ -1,10 +1,12 @@
-package com.renegens.movify.root;
+package com.renegens.movify.di;
 
-import com.renegens.movify.home.HomeModule;
-import com.renegens.movify.home.MainFragment;
+import com.renegens.movify.ui.home.HomeModule;
+import com.renegens.movify.ui.home.MainFragment;
 import com.renegens.movify.http.ApiModule;
-import com.renegens.movify.topmovies.ListFragment;
-import com.renegens.movify.topmovies.TopMoviesModule;
+import com.renegens.movify.AppClass;
+import com.renegens.movify.MainActivity;
+import com.renegens.movify.ui.topmovies.ListFragment;
+import com.renegens.movify.ui.topmovies.TopMoviesModule;
 
 import javax.inject.Singleton;
 

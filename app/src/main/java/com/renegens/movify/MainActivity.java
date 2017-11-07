@@ -1,14 +1,12 @@
-package com.renegens.movify.root;
+package com.renegens.movify;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.renegens.movify.R;
-import com.renegens.movify.home.MainFragment;
+import com.renegens.movify.ui.home.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +21,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, mainFragment)
                 .commit();
-
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

@@ -1,4 +1,4 @@
-package com.renegens.movify.home;
+package com.renegens.movify.ui.home;
 
 import dagger.Module;
 import dagger.Provides;

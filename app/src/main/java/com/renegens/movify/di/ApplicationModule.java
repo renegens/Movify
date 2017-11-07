@@ -1,4 +1,4 @@
-package com.renegens.movify.root;
+package com.renegens.movify.di;
 
 import android.app.Application;
 import android.content.Context;

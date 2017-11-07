@@ -1,4 +1,4 @@
-package com.renegens.movify.topmovies;
+package com.renegens.movify.ui.topmovies;
 
 import android.content.Context;
 import android.graphics.Canvas;

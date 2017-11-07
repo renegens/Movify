@@ -1,4 +1,4 @@
-package com.renegens.movify.topmovies;
+package com.renegens.movify.ui.topmovies;
 
 import org.themoviedb.models.toprated.Result;
 
