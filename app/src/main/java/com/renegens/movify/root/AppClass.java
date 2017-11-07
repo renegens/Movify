@@ -24,12 +24,8 @@ public class AppClass extends Application {
                 .apiModule(new ApiModule())
                 .build();
 
-        //Config Realm for the application
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this)
-                .name("movie.realm")
-                .build();
-        //Realm.deleteRealm(realmConfiguration); //Deletes the realm
-        Realm.setDefaultConfiguration(realmConfiguration);
+        Realm.init(this);
+
 
     }
 

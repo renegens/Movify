@@ -29,20 +29,10 @@ public class Repository implements ListRepository {
 
     @Override
     public Observable<Result> getFromDB() {
-
-        Observable<RealmResults<Result>> results = realm.where(Result.class).findAll().asObservable();
-
-        return results.flatMap(new Func1<RealmResults<Result>, Observable<Result>>() {
-            @Override
-            public Observable<Result> call(RealmResults<Result> results) {
-                return Observable.from(results);
-            }
-        }).doOnError(new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-                throwable.printStackTrace();
-            }
-        });
+        RealmResults<Result> results = realm.where(Result.class).findAll();
+        Observable.from(results);
+        return Observable.from(results)
+                .doOnError(Throwable::printStackTrace);
     }
 
     @Override
@@ -52,27 +42,12 @@ public class Repository implements ListRepository {
 
     @Override
     public Observable<Result> getFromNetwork() {
-
-        Observable<TopRated> topRatedObservable = movieApiService.getTopRatedMovies(1).concatWith(movieApiService.getTopRatedMovies(2)).concatWith(movieApiService.getTopRatedMovies(3));
-
-        return topRatedObservable.flatMap(new Func1<TopRated, Observable<Result>>() {
-            @Override
-            public Observable<Result> call(TopRated topRated) {
-                return Observable.from(topRated.results);
-            }
-        }).doOnNext(new Action1<Result>() {
-            @Override
-            public void call(Result result) {
-                results.add(result);
-            }
-        }).onErrorResumeNext(new Func1<Throwable, Observable<? extends Result>>() {
-            @Override
-            public Observable<? extends Result> call(Throwable throwable) {
-                throwable.printStackTrace();
-                return null;
-            }
-        });
-
+        return movieApiService
+                .getTopRatedMovies(1)
+                .concatWith(movieApiService.getTopRatedMovies(2))
+                .concatWith(movieApiService.getTopRatedMovies(3))
+                .flatMap(topRated -> Observable.from(topRated.results))
+                .doOnNext(result -> results.add(result));
     }
 
     @Override
