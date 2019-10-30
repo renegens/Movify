@@ -1,4 +1,4 @@
-# Movify
+# Android App Using Movies Api
 Demo app how to incorporate modern libraries and build a maintainable Android application.
 ## Synopsis
 
